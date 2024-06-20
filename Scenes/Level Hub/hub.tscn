@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7b7s6cm1vqrg"]
+
+[ext_resource type="Script" path="res://Scenes/Level Hub/hub.gd" id="1_ttpxj"]
+[ext_resource type="PackedScene" uid="uid://cb2vo3vy4xeu" path="res://Scenes/Player/multiplayer/multiplayer_player.tscn" id="2_an04p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qeoub"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_gl0st"]
+sky_material = SubResource("ProceduralSkyMaterial_qeoub")
+
+[sub_resource type="Environment" id="Environment_od2il"]
+background_mode = 2
+sky = SubResource("Sky_gl0st")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e2fnt"]
+size = Vector3(1, 0.489075, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_moc3s"]
+
+[node name="Hub" type="Node3D" node_paths=PackedStringArray("players_container", "player_spawner")]
+script = ExtResource("1_ttpxj")
+players_container = NodePath("Players")
+player_scene = ExtResource("2_an04p")
+player_spawner = NodePath("MultiplayerSpawner")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_od2il")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -6.38657, 0)
+shape = SubResource("BoxShape3D_e2fnt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8.02613)
+mesh = SubResource("BoxMesh_moc3s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.433013, 0.5, -0.75, -0.25, 0.866025, 0.433013, 0.866025, 0, 0.5, -6, 4, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Player/multiplayer/multiplayer_player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 4
+
+[node name="Players" type="Node3D" parent="."]

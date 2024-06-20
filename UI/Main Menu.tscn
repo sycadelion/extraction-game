@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://1vtabgmdqbya"]
+
+[ext_resource type="Script" path="res://UI/main_menu.gd" id="1_r4jl4"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r4jl4")
+
+[node name="GameTitle" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_right = 40.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameTitle"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GameTitle/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]Game Title[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -37.0
+offset_right = 21.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer/CenterContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VSplitContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Play"
+
+[node name="Join" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VSplitContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Join"
+
+[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VSplitContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VSplitContainer/Join" to="." method="_on_join_pressed"]

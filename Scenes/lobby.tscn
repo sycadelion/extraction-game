@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdaty1tj8c305"]
+
+[ext_resource type="Script" path="res://Scripts/Multiplayer/multiplayer_lobby.gd" id="1_lp11c"]
+[ext_resource type="PackedScene" uid="uid://c7b7s6cm1vqrg" path="res://Scenes/Level Hub/hub.tscn" id="2_kn1xs"]
+[ext_resource type="PackedScene" uid="uid://wlpkvyggn3ra" path="res://UI/error_prompt.tscn" id="3_rpgj8"]
+
+[node name="Lobby" type="Node"]
+script = ExtResource("1_lp11c")
+level_scene = ExtResource("2_kn1xs")
+
+[node name="Level" type="Node" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Level Hub/hub.tscn")
+spawn_path = NodePath("../Level")
+spawn_limit = 1
+
+[node name="Multiplayer" type="CanvasLayer" parent="."]
+
+[node name="ErrorPrompt" parent="Multiplayer" instance=ExtResource("3_rpgj8")]
+visible = false
+errorName = "Connection Failed"
+
+[node name="PanelContainer" type="PanelContainer" parent="Multiplayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.5
+offset_top = -20.0
+offset_right = 60.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Multiplayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Multiplayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="VBoxContainer" type="HBoxContainer" parent="Multiplayer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Multiplayer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "IP:"
+
+[node name="IPLineEdit" type="LineEdit" parent="Multiplayer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "  Enter IP Address"
+alignment = 1
+
+[node name="ConnectButton" type="Button" parent="Multiplayer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="BackButton" type="Button" parent="Multiplayer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="Multiplayer/PanelContainer/MarginContainer/HBoxContainer/ConnectButton" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="Multiplayer/PanelContainer/MarginContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
